@@ -4,12 +4,14 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+I'm Nate Donato.  I make websites, music, glitch art, and more.  I used to be a substitute teacher in Oakland, California; now I am a web developer and software engineer.
 
 ### More Information
 
-A place to include any other types of information that you'd like to include about yourself.
+You can visit my main portfolio website at [natedonato.com](http://natedonato.com) to see some of my recent projects or get my resume.  
+
+© Nate Donato 2019
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[natedonato@gmail.com](mailto:natedonato@gmail.com)
