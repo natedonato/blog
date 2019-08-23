@@ -71,7 +71,7 @@
 
         const postUrl = window.location.pathname;
 
-        url2 = `http://nateblogcomments.herokuapp.com/comments?postUrl=${postUrl}`
+        url2 = `https://nateblogcomments.herokuapp.com/comments?postUrl=${postUrl}`
         const url = 'https://randomuser.me/api/?results=10';
         
         fetch(url2)
@@ -96,7 +96,7 @@
                 "comment": document.getElementById('new_comment_text').value
             }
 
-         const url = 'http://nateblogcomments.herokuapp.com/comments';
+         const url = 'https://nateblogcomments.herokuapp.com/comments';
         // The data we are going to send in our request
         let comment = {
             name: document.getElementById('new_comment_name').value,
