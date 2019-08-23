@@ -1,0 +1,125 @@
+
+<h4> Comments</h4>
+
+<form class="pure-form" id="comment-form">
+    <div class="comment-form">
+        <div class="left-side">
+            <div class="row">
+                <input type="text" required placeholder="name" id="new_comment_name">
+                <input placeholder="email (optional)" type="email" id="new_comment_email">
+            </div>
+            <div class="row">
+                <textarea placeholder="Comment (must be at least 3 characters)" required id="new_comment_text" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="right-side">
+            <button type="submit" class="button-secondary pure-button">Send Comment</button>
+        </div>
+    </div>
+</form>
+
+
+<ul id="comments"> </ul>
+<script>
+
+    function formatDate(date) {
+            var monthNames = [
+                "January", "February", "March",
+                "April", "May", "June", "July",
+                "August", "September", "October",
+                "November", "December"
+            ];
+
+            var day = date.getDate();
+            var monthIndex = date.getMonth();
+            var year = date.getFullYear();
+
+            return monthNames[monthIndex] + ' ' + day + ' ' + year;
+        }
+
+      function createNode(element) {
+            return document.createElement(element);
+        }
+
+        function append(parent, el) {
+            return parent.appendChild(el);
+        }
+
+        function receiveComment(data, top = false) {
+                let comments = data;
+                return comments.map(function (comment) {
+                    let li = createNode('li'),
+                        span = createNode('span');
+                    body = createNode('p');
+                    let email = ''
+                    if (comment.email !== null) {
+                        email = comment.email
+                    }
+                    let date = formatDate(new Date(comment.created_at))
+                    span.innerHTML = `${comment.name} ${email} ${date}`;
+                    body.innerHTML = `${comment.body}`;
+                    append(li, span);
+                    append(li, body);
+                    if(top === true){
+                        ul.insertBefore(li, ul.childNodes[0])
+                    }else{
+                    append(ul, li)};
+                })
+            }
+
+        const ul = document.getElementById('comments');
+
+        const postUrl = window.location.pathname;
+
+        url2 = `http://nateblogcomments.herokuapp.com/comments?postUrl=${postUrl}`
+        const url = 'https://randomuser.me/api/?results=10';
+        
+        fetch(url2)
+            .then((resp) => resp.json())
+            .then((data) => receiveComment(data))
+            .catch(function (error) {
+                console.log(error);
+            });   
+
+
+
+    const commentForm = document.getElementById('comment-form');
+
+                // Adding to Comment Form Submit Event
+    commentForm.addEventListener("submit", addNewComment);
+    
+    function addNewComment(event) {
+            event.preventDefault();
+            var newComment = {
+                "name": document.getElementById('new_comment_name').value,
+                "email": document.getElementById('new_comment_email').value,
+                "comment": document.getElementById('new_comment_text').value
+            }
+
+         const url = 'http://nateblogcomments.herokuapp.com/comments';
+        // The data we are going to send in our request
+        let comment = {
+            name: document.getElementById('new_comment_name').value,
+            email: document.getElementById('new_comment_email').value,
+            body: document.getElementById('new_comment_text').value,
+            postUrl: window.location.pathname
+        }
+        json = JSON.stringify({comment: comment})
+        // The parameters we are gonna pass to the fetch function
+        let fetchData = {
+            method: 'POST',
+            body: json,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }
+        fetch(url, fetchData)
+            .then((resp) => resp.json())
+            .then((data) => receiveComment([data], true))
+        }
+
+</script>
+
+
+<!-- <h3> {{ page.id }}</h3> -->
