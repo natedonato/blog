@@ -2,18 +2,21 @@
 <h4> Comments</h4>
 
 <form class="pure-form" id="comment-form">
+
+    
     <div class="comment-form">
+        <div> Leave a Comment:</div>
         <div class="left-side">
             <div class="row">
-                <input type="text" required placeholder="name" id="new_comment_name">
-                <input placeholder="email (optional)" type="email" id="new_comment_email">
+                <input type="text" required placeholder="Name" id="new_comment_name">
+                <input placeholder="Email (optional)" type="email" id="new_comment_email">
             </div>
             <div class="row">
-                <textarea placeholder="Comment (must be at least 3 characters)" required id="new_comment_text" rows="3"></textarea>
+                <textarea placeholder="Add a comment... (must be at least 3 characters)" required id="new_comment_text" rows="3"></textarea>
             </div>
         </div>
         <div class="right-side">
-            <button type="submit" class="button-secondary pure-button">Send Comment</button>
+            <button type="submit" class="button-secondary pure-button">Post</button>
         </div>
     </div>
 </form>
@@ -34,7 +37,7 @@
             var monthIndex = date.getMonth();
             var year = date.getFullYear();
 
-            return monthNames[monthIndex] + ' ' + day + ' ' + year;
+            return monthNames[monthIndex] + ' ' + day + ', ' + year;
         }
 
       function createNode(element) {
@@ -49,16 +52,25 @@
                 let comments = data;
                 return comments.map(function (comment) {
                     let li = createNode('li'),
-                        span = createNode('span');
+                        span = createNode('span'),
+                        span2 = createNode('span'),
                     body = createNode('p');
                     let email = ''
                     if (comment.email !== null) {
                         email = comment.email
                     }
                     let date = formatDate(new Date(comment.created_at))
-                    span.textContent = `${comment.name} ${email} ${date}`;
+                    let icon = createNode('div');
+                    icon.textContent = comment.name[0];
+                    icon.classList.add('icon');
+                    span.classList.add('commentName');
+                    span.textContent = comment.name;
                     body.textContent = `${comment.body}`;
+                    append(li, icon);
                     append(li, span);
+                    span2.textContent = date;
+                    span2.classList.add('commentDate');
+                    append(li, span2);
                     append(li, body);
                     if(top === true){
                         ul.insertBefore(li, ul.childNodes[0])
