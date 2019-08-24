@@ -56,8 +56,8 @@
                         email = comment.email
                     }
                     let date = formatDate(new Date(comment.created_at))
-                    span.innerHTML = `${comment.name} ${email} ${date}`;
-                    body.innerHTML = `${comment.body}`;
+                    span.textContent = `${comment.name} ${email} ${date}`;
+                    body.textContent = `${comment.body}`;
                     append(li, span);
                     append(li, body);
                     if(top === true){
